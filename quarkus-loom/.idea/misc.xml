@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="Quarkus" url="file://$PROJECT_DIR$/reactive-routes-hibernate-reactive" />
+    <file type="Quarkus" url="file://$PROJECT_DIR$/reactive-routes-pgclient" />
+    <file type="Quarkus" url="file://$PROJECT_DIR$/resteasy-hibernate" />
+    <file type="Quarkus" url="file://$PROJECT_DIR$/resteasy-reactive-hibernate" />
+    <file type="Quarkus" url="file://$PROJECT_DIR$/resteasy-reactive-hibernate-reactive" />
+    <file type="Quarkus" url="file://$PROJECT_DIR$/resteasy-reactive-pgclient" />
+    <file type="Quarkus" url="file://$PROJECT_DIR$/resteasy-reactive-pgclient-full-synchronous" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/reactive-routes-hibernate-reactive/pom.xml" />
+        <option value="$PROJECT_DIR$/reactive-routes-pgclient/pom.xml" />
+        <option value="$PROJECT_DIR$/resteasy-hibernate/pom.xml" />
+        <option value="$PROJECT_DIR$/resteasy-reactive-hibernate-reactive/pom.xml" />
+        <option value="$PROJECT_DIR$/resteasy-reactive-hibernate/pom.xml" />
+        <option value="$PROJECT_DIR$/resteasy-reactive-pgclient/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="true" project-jdk-name="19loom" project-jdk-type="JavaSDK" />
+</project>

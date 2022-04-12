@@ -1,0 +1,12 @@
+io/quarkus/benchmark/resource/JsonResource.class
+io/quarkus/benchmark/repository/PgClients.class
+io/quarkus/benchmark/repository/PgClientFactory.class
+io/quarkus/benchmark/model/Fortune.class
+io/quarkus/benchmark/resource/FortuneResource.class
+io/quarkus/benchmark/resource/PlaintextResource.class
+io/quarkus/benchmark/model/World.class
+io/quarkus/benchmark/filter/ServerHeaderFilter.class
+io/quarkus/benchmark/resource/DbResource.class
+io/quarkus/benchmark/repository/WorldRepository.class
+io/quarkus/benchmark/repository/FortuneRepository.class
+io/quarkus/benchmark/resource/Message.class

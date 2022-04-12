@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="reactive-routes-hibernate-reactive" />
+        <module name="resteasy-reactive-hibernate-reactive" />
+        <module name="resteasy-reactive-pgclient-overhead" />
+        <module name="resteasy-reactive-hibernate" />
+        <module name="resteasy-hibernate" />
+        <module name="resteasy-reactive-pgclient" />
+        <module name="reactive-routes-pgclient" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="resteasy-reactive-pgclient (1)" target="11" />
+      <module name="resteasy-reactive-pgclient-full-synchronous" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
