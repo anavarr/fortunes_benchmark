@@ -11,12 +11,12 @@
 #Example for NoColor : '\033[0m'
 
 duration=5m
-
+mydir=$(pwd)
 do_stuff() {
     prefix="http://localhost:8080/fortunes"
     array=("quarkus-999" "quarkus-999-blocking" "quarkus-loom")
     # array=("quarkus-999" "quarkus-loom")
-    # array=("quarkus-999-blocking")
+    array=("quarkus-999-blocking")
     ulimit -n 1000000;
 
     concurrencyLvl=$i
@@ -32,11 +32,11 @@ do_stuff() {
         echo "warmup done"
         (
             j=0
-            cd ~/Documents/thesis/prog/java/CUSTOM_TECHEMP/tester/
-            rm ~/Documents/thesis/prog/java/CUSTOM_TECHEMP/latency_res/concurreny_lvl_$concurrencyLvl/$i.rss
+            cd $mydir
+            rm $mydir/../latency_res/concurreny_lvl_$concurrencyLvl/$i.rss
             while true;
             do
-            docker run --rm --privileged --pid=host justincormack/nsenter1 /bin/bash -c 'ps -e -o pid,rss,comm,args' | grep --color=auto --color=auto "java \-\-add\-opens java.base/java.lang" | awk '{$2=int($2/1024)"M";}{ print $2;}' |head -n 1 >> ~/Documents/thesis/prog/java/CUSTOM_TECHEMP/latency_res/concurreny_lvl_$concurrencyLvl/$i.rss
+            docker run --rm --privileged --pid=host justincormack/nsenter1 /bin/bash -c 'ps -e -o pid,rss,comm,args' | grep --color=auto --color=auto "java \-\-add\-opens java.base/java.lang" | awk '{$2=int($2/1024)"M";}{ print $2;}' |head -n 1 >> $mydir/../latency_res/concurreny_lvl_$concurrencyLvl/$i.rss
             j=$((j+1))
             sleep 10
             done
@@ -44,7 +44,7 @@ do_stuff() {
         echo "started rss probe"
         mypid=$!
         echo "the pid is $mypid"
-        /home/arnavarr/manual_installs/hyperfoil-0.19/bin/wrk2.sh -t2 -c$concurrencyLvl -R $concurrencyLvl -d $duration --timeout 20s --latency http://localhost:8080/fortunes > ~/Documents/thesis/prog/java/CUSTOM_TECHEMP/latency_res/$folder/$i.hgrm
+        /home/arnavarr/manual_installs/hyperfoil-0.19/bin/wrk2.sh -t2 -c$concurrencyLvl -R $concurrencyLvl -d $duration --timeout 20s --latency http://localhost:8080/fortunes > $mydir/../latency_res/$folder/$i.hgrm
         # /home/arnavarr/Documents/thesis/sources/wrk2/wrk -c$(($concurrencyLvl*2)) -R$concurrencyLvl -d$duration --timeout 20s --latency http://localhost:8080/fortunes > ~/Documents/thesis/prog/java/CUSTOM_TECHEMP/latency_res/$folder/$i.hgrm
         kill -9 $mypid
         ps > /dev/null
@@ -82,7 +82,7 @@ do
     echo -e "\033[0;31m ============ Starting the tests for $i sql connections and $i workers =========== \033[0m"
     echo ""
     cd ..
-    ./prepare_all.sh 500 $i
+    ./prepare_all.sh 1100 $i
     folder=concurreny_lvl_${i}
     cd latency_res
     [ ! -d $folder ] && mkdir $folder
