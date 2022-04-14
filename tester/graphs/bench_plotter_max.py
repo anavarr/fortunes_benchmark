@@ -12,12 +12,14 @@ names_finale = ["reactive", "blocking", "virtual_thread"]
 
 names_finale2names={"reactive": "quarkus-999", "blocking": "quarkus-999-blocking", "virtual_thread":"quarkus-loom"}
 file_ext = ".hgrm"
-prefix_path="/home/arnavarr/Documents/thesis/prog/java/CUSTOM_TECHEMP/latency_res/quarkus-999-SNAPSHOT_clean_RunOnVirtualThread"
+prefix_path="/home/arnavarr/Documents/thesis/prog/java/CUSTOM_TECHEMP/latency_res/quarkus-999_cleanBis-micro"
 dict=pd.DataFrame()
 
 START=800
 END=2200
 STEP=100
+
+COLORS = ["#FF014A", "#4696ed", "#063763"]
 
 series_dict = {}
 series_dict[names_finale[0]] = []
@@ -175,11 +177,10 @@ def plot_latency_focus():
     global total_stuff
     total_stuff = total_stuff.reset_index()
     df_latencies  = formalize_latency_maximums(total_stuff)
-    colors=["#FF014A", "#4696ed", "#063763"]
 
     sns.set_theme()
     sns.set_style("whitegrid")
-    sns.set_palette(sns.color_palette(colors))
+    sns.set_palette(sns.color_palette(COLORS))
     fig, ax=plt.subplots(2,2)
     fig.subplots_adjust(left=0.1,
                         bottom=0.1, 
@@ -209,15 +210,14 @@ def plot_latency_focus():
     plt.show()
 
 def plot_summary():
-    fig,ax=plt.subplots(2,2, sharex=True)
+    fig,ax=plt.subplots(2,2)
+
     df = pd.DataFrame(list(zip(concurrency_lvls,
         series_dict[names_finale[0]], series_dict[names_finale[1]], series_dict[names_finale[2]])),
         columns=["concurrency_lvl", "reactive", "blocking", "virtual_thread"])
-    
-    print(df)
     # df = pd.DataFrame(list(zip(concurrency_lvls,
-    #     series_dict[names_finale[0]])),
-    #     columns=["concurrency_lvl", "reactive"])
+    #     series_dict[names_finale[0]], series_dict[names_finale[2]])),
+    #     columns=["concurrency_lvl", "reactive","loom"])
 
 
 
@@ -225,8 +225,8 @@ def plot_summary():
         troughput_dict[names_finale[0]], troughput_dict[names_finale[1]], troughput_dict[names_finale[2]])),
         columns=["concurrency_lvl", "reactive", "blocking", "virtual_thread"])
     # df_throughput = pd.DataFrame(list(zip(concurrency_lvls,
-    #     troughput_dict[names_finale[0]])),
-    #     columns=["concurrency_lvl", "reactive"])
+    #     troughput_dict[names_finale[0]], troughput_dict[names_finale[2]])),
+    #     columns=["concurrency_lvl", "reactive","loom"])
 
 
 
@@ -234,8 +234,8 @@ def plot_summary():
         memory_dict[names_finale[0]], memory_dict[names_finale[1]], memory_dict[names_finale[2]])),
         columns=["concurrency_lvl", "reactive", "blocking", "virtual_thread"])
     # df_rss = pd.DataFrame(list(zip(concurrency_lvls,
-    #     memory_dict[names_finale[0]])),
-    #     columns=["concurrency_lvl", "reactive"])
+    #     memory_dict[names_finale[0]], memory_dict[names_finale[2]])),
+    #     columns=["concurrency_lvl", "reactive","loom"])
 
 
 
@@ -246,17 +246,29 @@ def plot_summary():
     #     err_rate_dict[names_finale[0]], err_rate_dict[names_finale[1]])),
     #     columns=["concurrency_lvl", "reactive", "blocking"])
 
-    axe_lat = df.plot(x="concurrency_lvl", ax=ax[0,0])
-    axe_lat.set_ylabel("response time (sec) - lower is better")
+    fontsize=14
 
-    axe_th = df_throughput.plot(x="concurrency_lvl", ax=ax[0,1])
-    axe_th.set_ylabel("throughput (Reqs/sec) - higher is better")
+
+    axe_lat = df.plot(x="concurrency_lvl", ax=ax[0,0], 
+        color=COLORS, fontsize=fontsize)
+    axe_lat.set_ylabel("response time (sec) - lower is better", fontsize=fontsize)
+    axe_lat.set_xlabel("concurrency level (reqs/s)", fontsize=fontsize)
+    axe_lat.legend(fontsize=fontsize)
+
+    axe_th = df_throughput.plot(x="concurrency_lvl", ax=ax[0,1], 
+        color=COLORS, fontsize=fontsize)
+    axe_th.set_ylabel("throughput (reqs/sec) - higher is better", fontsize=fontsize)
+    axe_th.set_xlabel("concurrency level (reqs/s)", fontsize=fontsize)
+    axe_th.legend(fontsize=fontsize)
 
     # axe_err = df_err_rate.plot(x="concurrency_lvl", ax=ax[1,0])
     # axe_err.set_ylabel("error rate (%) - lower is better")
 
-    axe_rss = df_rss.plot(x="concurrency_lvl", ax=ax[1,1])
-    axe_rss.set_ylabel("RSS (MB) - lower is better")
+    axe_rss = df_rss.plot(x="concurrency_lvl", ax=ax[1,1], 
+        color=COLORS, fontsize=fontsize)
+    axe_rss.set_ylabel("RSS (MB) - lower is better", fontsize=fontsize)
+    axe_rss.set_xlabel("concurrency level (reqs/s)", fontsize=fontsize)
+    axe_rss.legend(fontsize=fontsize)
 
     pd.set_option('display.max_rows', None)
     plt.show()

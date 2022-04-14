@@ -14,7 +14,7 @@ duration=5m
 
 do_stuff() {
     prefix="http://localhost:8080/fortunes"
-    array=("quarkus-999" "quarkus-loom")
+    array=("quarkus-999" "quarkus-999-blocking" "quarkus-loom")
     # array=("quarkus-999" "quarkus-loom")
     # array=("quarkus-999-blocking")
     ulimit -n 1000000;
@@ -62,7 +62,7 @@ do_stuff() {
 
 
 
-for i in {1300..2000..100}
+for i in {800..2100..100}
 do
     echo ""
     echo ""
