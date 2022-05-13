@@ -1,0 +1,6 @@
+quarkus-999/resteasy-reactive-pgclient/target
+quarkus-999-blocking/resteasy-reactive-pgclient/target
+quarkus-loom/resteasy-reactive-pgclient-full-synchronous/target
+
+
+
