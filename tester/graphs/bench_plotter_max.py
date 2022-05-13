@@ -15,7 +15,7 @@ file_ext = ".hgrm"
 prefix_path="/home/arnavarr/Documents/thesis/prog/java/CUSTOM_TECHEMP/latency_res"
 dict=pd.DataFrame()
 
-START=1000
+START=1400
 END=7500
 STEP=200
 
