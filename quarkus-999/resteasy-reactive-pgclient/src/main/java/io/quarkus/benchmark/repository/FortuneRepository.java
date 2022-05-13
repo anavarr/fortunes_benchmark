@@ -18,7 +18,7 @@ public class FortuneRepository {
 
     public Uni<List<Fortune>> findAll() {
 //        System.out.println(Thread.currentThread());
-        return clients.getPool().preparedQuery("SELECT * FROM Fortune" )
+        return clients.getPool().preparedQuery("SELECT * FROM Fortune")
                 .execute()
                 .map(rowset -> {
                     List<Fortune> ret = new ArrayList<>(rowset.size()+1);

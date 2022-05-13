@@ -23,6 +23,7 @@ public class PgClientFactory {
 
 	// vertx-reactive:postgresql://tfb-database:5432/hello_world
 	private static final String PG_URI_MATCHER = "vertx-reactive:postgresql://(.+):([0-9]+)/(.*)";
+//	private static final String PG_URI_MATCHER = "(.+):([0-9]+)/(.*)";
 
 	@ConfigProperty(name = "quarkus.datasource.url")
 	String url;

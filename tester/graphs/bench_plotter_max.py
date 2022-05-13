@@ -12,12 +12,12 @@ names_finale = ["reactive", "blocking", "virtual_thread"]
 
 names_finale2names={"reactive": "quarkus-999", "blocking": "quarkus-999-blocking", "virtual_thread":"quarkus-loom"}
 file_ext = ".hgrm"
-prefix_path="/home/arnavarr/Documents/thesis/prog/java/CUSTOM_TECHEMP/latency_res/quarkus-999_cleanBis-micro"
+prefix_path="/home/arnavarr/Documents/thesis/prog/java/CUSTOM_TECHEMP/latency_res"
 dict=pd.DataFrame()
 
-START=800
-END=2200
-STEP=100
+START=1000
+END=7500
+STEP=200
 
 COLORS = ["#FF014A", "#4696ed", "#063763"]
 
@@ -30,6 +30,11 @@ troughput_dict = {}
 troughput_dict[names_finale[0]] = []
 troughput_dict[names_finale[1]] = []
 troughput_dict[names_finale[2]] = []
+
+cpu_dict = {}
+cpu_dict[names_finale[0]] = []
+cpu_dict[names_finale[1]] = []
+cpu_dict[names_finale[2]] = []
 
 err_rate_dict = {}
 err_rate_dict[names_finale[0]] = []
@@ -113,6 +118,7 @@ def read_files():
         for name in names_finale:
             ldict[f"{name}_rss"] = []
             try:
+
                 # put everything in a df
                 global total_stuff
                 global series_dict
@@ -158,6 +164,18 @@ def read_files():
                 else :
                     err_rate = line[0]
                     err_rate_dict[name].append(100* float(err_rate.split("requestTimeouts")[1].strip())/total_req)
+                
+                
+                # get average cpu usage
+                file = open(os.path.join(prefix_path, folder, f"{names_finale2names[name]}.cpu"))
+                lines = file.readlines()
+                cpus=list(map(lambda line : float(line.replace("%",""))*2.0, lines))
+                cpu_dict[name].append(average(cpus))
+                if len(cpus) < shortest : 
+                    shortest = len(cpus)
+                for cpu in cpus:
+                    ldict[f"{name}_rss"].append(cpu)
+            
             except Exception as e:
                 print(e)
                 print(f"error with {name}-{i}{file_ext} at {i}")
@@ -237,6 +255,9 @@ def plot_summary():
     #     memory_dict[names_finale[0]], memory_dict[names_finale[2]])),
     #     columns=["concurrency_lvl", "reactive","loom"])
 
+    df_cpu = pd.DataFrame(list(zip(concurrency_lvls,
+        cpu_dict[names_finale[0]], cpu_dict[names_finale[1]], cpu_dict[names_finale[2]])),
+        columns=["concurrency_lvl", "reactive", "blocking", "virtual_thread"])
 
 
     # df_err_rate = pd.DataFrame(list(zip(concurrency_lvls,
@@ -269,6 +290,12 @@ def plot_summary():
     axe_rss.set_ylabel("RSS (MB) - lower is better", fontsize=fontsize)
     axe_rss.set_xlabel("concurrency level (reqs/s)", fontsize=fontsize)
     axe_rss.legend(fontsize=fontsize)
+
+    axe_cpu = df_cpu.plot(x="concurrency_lvl", ax=ax[1,0], 
+        color=COLORS, fontsize=fontsize)
+    axe_cpu.set_ylabel("CPU (%) - lower is better", fontsize=fontsize)
+    axe_cpu.set_xlabel("concurrency level (reqs/s)", fontsize=fontsize)
+    axe_cpu.legend(fontsize=fontsize)
 
     pd.set_option('display.max_rows', None)
     plt.show()
